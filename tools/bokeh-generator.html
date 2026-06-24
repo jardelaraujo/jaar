@@ -1,0 +1,271 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Gerador de Imagens Abstratas</title>
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+
+    body {
+      background: #0a0a0f;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      min-height: 100vh;
+      font-family: system-ui, sans-serif;
+      color: #eee;
+      gap: 24px;
+    }
+
+    h1 {
+      font-size: 1.1rem;
+      font-weight: 400;
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+      opacity: 0.5;
+    }
+
+    canvas {
+      border-radius: 12px;
+      cursor: pointer;
+      transition: transform 0.15s ease, box-shadow 0.15s ease;
+      box-shadow: 0 0 60px rgba(0,0,0,0.6);
+      max-width: 90vw;
+      max-height: 70vh;
+    }
+
+    canvas:hover {
+      transform: scale(1.01);
+      box-shadow: 0 0 80px rgba(100,100,255,0.3);
+    }
+
+    .controls {
+      display: flex;
+      gap: 12px;
+      flex-wrap: wrap;
+      justify-content: center;
+    }
+
+    button {
+      background: rgba(255,255,255,0.07);
+      border: 1px solid rgba(255,255,255,0.12);
+      color: #eee;
+      padding: 10px 24px;
+      border-radius: 8px;
+      cursor: pointer;
+      font-size: 0.85rem;
+      letter-spacing: 0.05em;
+      transition: background 0.15s, border-color 0.15s;
+    }
+
+    button:hover {
+      background: rgba(255,255,255,0.13);
+      border-color: rgba(255,255,255,0.25);
+    }
+
+    button.primary {
+      background: rgba(120, 80, 255, 0.25);
+      border-color: rgba(120, 80, 255, 0.5);
+    }
+
+    button.primary:hover {
+      background: rgba(120, 80, 255, 0.4);
+    }
+
+    button.random-btn {
+      background: rgba(255, 140, 0, 0.2);
+      border-color: rgba(255, 140, 0, 0.45);
+    }
+
+    button.random-btn:hover {
+      background: rgba(255, 140, 0, 0.35);
+    }
+
+    .hint {
+      font-size: 0.75rem;
+      opacity: 0.3;
+      letter-spacing: 0.05em;
+    }
+
+    select {
+      background: rgba(255,255,255,0.07);
+      border: 1px solid rgba(255,255,255,0.12);
+      color: #eee;
+      padding: 10px 16px;
+      border-radius: 8px;
+      cursor: pointer;
+      font-size: 0.85rem;
+    }
+
+    select option { background: #1a1a2e; }
+  </style>
+</head>
+<body>
+  <h1>Gerador de Bokeh Abstrato</h1>
+
+  <canvas id="canvas" width="1200" height="675"></canvas>
+
+  <div class="controls">
+    <select id="palette">
+      <option value="neon">Neon (padrão)</option>
+      <option value="sunset">Sunset</option>
+      <option value="ocean">Ocean</option>
+      <option value="forest">Forest</option>
+      <option value="fire">Fire</option>
+      <option value="random">Aleatória</option>
+    </select>
+    <button class="primary" onclick="generate()">Gerar nova ✦</button>
+    <button class="random-btn" onclick="generateRandom()">Aleatoriamente 🎲</button>
+    <button onclick="download()">Baixar PNG</button>
+  </div>
+
+  <p class="hint">Clique na imagem ou em "Gerar nova" para criar uma diferente</p>
+
+  <script>
+    const canvas = document.getElementById('canvas');
+    const ctx = canvas.getContext('2d');
+
+    const palettes = {
+      neon: [
+        [0, 230, 255],    // ciano
+        [220, 50, 255],   // magenta
+        [80, 80, 255],    // azul
+        [255, 50, 180],   // rosa
+        [0, 150, 255],    // azul claro
+        [180, 0, 255],    // violeta
+      ],
+      sunset: [
+        [255, 80, 20],
+        [255, 180, 0],
+        [255, 50, 100],
+        [200, 0, 80],
+        [255, 120, 60],
+        [150, 0, 150],
+      ],
+      ocean: [
+        [0, 200, 220],
+        [0, 100, 200],
+        [0, 180, 120],
+        [20, 60, 180],
+        [0, 230, 180],
+        [10, 80, 160],
+      ],
+      forest: [
+        [0, 200, 80],
+        [80, 220, 50],
+        [0, 150, 100],
+        [50, 180, 0],
+        [100, 255, 100],
+        [0, 100, 60],
+      ],
+      fire: [
+        [255, 60, 0],
+        [255, 200, 0],
+        [255, 100, 0],
+        [200, 0, 0],
+        [255, 150, 50],
+        [180, 0, 50],
+      ],
+    };
+
+    function randomPalette() {
+      const all = Object.values(palettes).flat();
+      const shuffled = all.sort(() => Math.random() - 0.5);
+      return shuffled.slice(0, 6);
+    }
+
+    function rand(min, max) {
+      return Math.random() * (max - min) + min;
+    }
+
+    function generate() {
+      const W = canvas.width;
+      const H = canvas.height;
+
+      ctx.fillStyle = `hsl(${rand(220, 260)}, 30%, ${rand(3, 8)}%)`;
+      ctx.fillRect(0, 0, W, H);
+
+      const paletteKey = document.getElementById('palette').value;
+      const colors = paletteKey === 'random' ? randomPalette() : palettes[paletteKey];
+
+      const blobCount = Math.floor(rand(6, 14));
+
+      for (let i = 0; i < blobCount; i++) {
+        const color = colors[Math.floor(Math.random() * colors.length)];
+        const x = rand(-W * 0.1, W * 1.1);
+        const y = rand(-H * 0.1, H * 1.1);
+        const r = rand(H * 0.15, H * 0.55);
+        const alpha = rand(0.25, 0.75);
+
+        const grad = ctx.createRadialGradient(x, y, 0, x, y, r);
+        grad.addColorStop(0, `rgba(${color[0]}, ${color[1]}, ${color[2]}, ${alpha})`);
+        grad.addColorStop(0.4, `rgba(${color[0]}, ${color[1]}, ${color[2]}, ${alpha * 0.5})`);
+        grad.addColorStop(1, `rgba(${color[0]}, ${color[1]}, ${color[2]}, 0)`);
+
+        ctx.fillStyle = grad;
+        ctx.beginPath();
+        ctx.arc(x, y, r, 0, Math.PI * 2);
+        ctx.fill();
+      }
+
+      applyBlur();
+      addVignette();
+    }
+
+    function applyBlur() {
+      const W = canvas.width;
+      const H = canvas.height;
+      const blurAmount = Math.floor(rand(40, 80));
+      const pad = blurAmount * 2;
+
+      // Canvas maior que o original para o blur não degradar as bordas
+      const tmp = document.createElement('canvas');
+      tmp.width = W + pad * 2;
+      tmp.height = H + pad * 2;
+      const tctx = tmp.getContext('2d');
+
+      tctx.filter = `blur(${blurAmount}px)`;
+      tctx.drawImage(canvas, pad, pad);
+
+      // Recorta de volta ao tamanho original, descartando as bordas com artefato
+      ctx.clearRect(0, 0, W, H);
+      ctx.drawImage(tmp, pad, pad, W, H, 0, 0, W, H);
+    }
+
+    function addVignette() {
+      const W = canvas.width;
+      const H = canvas.height;
+      const cx = W / 2, cy = H / 2;
+      const r = Math.max(W, H) * 0.75;
+
+      const grad = ctx.createRadialGradient(cx, cy, r * 0.3, cx, cy, r);
+      grad.addColorStop(0, 'rgba(0,0,0,0)');
+      grad.addColorStop(1, 'rgba(0,0,0,0.75)');
+
+      ctx.fillStyle = grad;
+      ctx.fillRect(0, 0, W, H);
+    }
+
+    function download() {
+      const link = document.createElement('a');
+      link.download = `bokeh-abstrato-${Date.now()}.png`;
+      link.href = canvas.toDataURL('image/png');
+      link.click();
+    }
+
+    function generateRandom() {
+      const keys = Object.keys(palettes);
+      const randomKey = keys[Math.floor(Math.random() * keys.length)];
+      document.getElementById('palette').value = randomKey;
+      generate();
+    }
+
+    canvas.addEventListener('click', generate);
+
+    // Gera ao carregar
+    generate();
+  </script>
+</body>
+</html>
