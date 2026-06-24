@@ -3,158 +3,223 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>jaar — ferramentas</title>
+  <title>JAAR — The Future Needs You</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Black+Ops+One&family=Share+Tech+Mono&display=swap" rel="stylesheet">
   <style>
     *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
 
     :root {
-      --bg: #07070d;
-      --surface: rgba(255,255,255,0.04);
-      --border: rgba(255,255,255,0.08);
-      --text: #e8e8f0;
-      --muted: rgba(232,232,240,0.4);
-      --accent: #7c5cfc;
+      --black: #000000;
+      --white: #ffffff;
+      --red:    #e8251a;
+      --orange: #f07010;
+      --yellow: #f5c800;
+      --green:  #2a9a2a;
+      --blue:   #1a50c8;
     }
 
     body {
-      background: var(--bg);
-      color: var(--text);
-      font-family: system-ui, -apple-system, sans-serif;
+      background: var(--black);
+      color: var(--white);
+      font-family: 'Share Tech Mono', monospace;
       min-height: 100vh;
       display: flex;
       flex-direction: column;
+      align-items: center;
     }
 
-    header {
-      padding: 48px 48px 0;
-    }
-
-    .logo {
-      font-size: 1.5rem;
-      font-weight: 700;
-      letter-spacing: -0.03em;
-      color: var(--text);
-      text-decoration: none;
-    }
-
-    .logo span { color: var(--accent); }
-
-    main {
-      flex: 1;
-      padding: 64px 48px;
-      max-width: 1100px;
+    /* ── HERO ── */
+    .hero {
       width: 100%;
-      margin: 0 auto;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      padding: 72px 24px 0;
     }
 
-    .heading {
-      margin-bottom: 8px;
-      font-size: 2rem;
-      font-weight: 700;
-      letter-spacing: -0.03em;
+    .logo-wrap {
+      position: relative;
+      display: inline-block;
     }
 
-    .subheading {
-      color: var(--muted);
-      font-size: 0.95rem;
-      margin-bottom: 48px;
+    .logo-text {
+      font-family: 'Black Ops One', sans-serif;
+      font-size: clamp(80px, 18vw, 200px);
+      color: var(--white);
+      letter-spacing: 0.04em;
+      line-height: 1;
+      /* inline stroke effect */
+      -webkit-text-stroke: 3px var(--black);
+      paint-order: stroke fill;
+      text-shadow:
+        /* outer white halo for the inline look */
+        0 0 0 var(--white),
+        4px 4px 0 rgba(0,0,0,0.4);
+      position: relative;
     }
 
+    /* Rainbow stripe */
+    .stripe {
+      width: 100%;
+      display: flex;
+      height: 18px;
+      margin-top: 10px;
+    }
+
+    .stripe span {
+      flex: 1;
+    }
+
+    .tagline {
+      margin-top: 18px;
+      font-family: 'Share Tech Mono', monospace;
+      font-size: clamp(0.65rem, 2vw, 0.85rem);
+      letter-spacing: 0.35em;
+      text-transform: uppercase;
+      color: var(--white);
+      opacity: 0.75;
+    }
+
+    /* ── SECTION ── */
+    .section {
+      width: 100%;
+      max-width: 1000px;
+      padding: 72px 32px 48px;
+    }
+
+    .section-label {
+      font-size: 0.65rem;
+      letter-spacing: 0.4em;
+      text-transform: uppercase;
+      color: var(--yellow);
+      margin-bottom: 28px;
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+
+    .section-label::after {
+      content: '';
+      flex: 1;
+      height: 1px;
+      background: rgba(255,255,255,0.12);
+    }
+
+    /* ── GRID ── */
     .grid {
       display: grid;
-      grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
-      gap: 20px;
+      grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+      gap: 2px;
     }
 
     .card {
-      background: var(--surface);
-      border: 1px solid var(--border);
-      border-radius: 14px;
-      padding: 28px;
+      background: #0d0d0d;
+      border: 1px solid rgba(255,255,255,0.08);
+      padding: 28px 24px;
       text-decoration: none;
-      color: var(--text);
+      color: var(--white);
       display: flex;
       flex-direction: column;
-      gap: 12px;
-      transition: background 0.15s, border-color 0.15s, transform 0.15s;
-      cursor: pointer;
+      gap: 10px;
+      transition: background 0.12s;
+      position: relative;
+      overflow: hidden;
     }
 
-    .card:hover {
-      background: rgba(255,255,255,0.07);
-      border-color: rgba(255,255,255,0.15);
-      transform: translateY(-2px);
+    .card::before {
+      content: '';
+      position: absolute;
+      top: 0; left: 0; right: 0;
+      height: 3px;
+      background: linear-gradient(90deg, var(--red), var(--yellow), var(--green), var(--blue));
+      opacity: 0;
+      transition: opacity 0.12s;
     }
 
-    .card-icon {
-      width: 44px;
-      height: 44px;
-      border-radius: 10px;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      font-size: 1.4rem;
+    .card:hover { background: #141414; }
+    .card:hover::before { opacity: 1; }
+
+    .card-num {
+      font-size: 0.6rem;
+      letter-spacing: 0.25em;
+      color: rgba(255,255,255,0.25);
     }
 
     .card-title {
-      font-size: 1rem;
-      font-weight: 600;
-      letter-spacing: -0.01em;
+      font-family: 'Black Ops One', sans-serif;
+      font-size: 1.05rem;
+      letter-spacing: 0.05em;
+      line-height: 1.2;
+      color: var(--white);
     }
 
     .card-desc {
-      font-size: 0.82rem;
-      color: var(--muted);
-      line-height: 1.5;
+      font-size: 0.75rem;
+      color: rgba(255,255,255,0.45);
+      line-height: 1.6;
     }
 
     .card-tag {
       margin-top: auto;
-      font-size: 0.7rem;
-      letter-spacing: 0.08em;
+      padding-top: 14px;
+      font-size: 0.6rem;
+      letter-spacing: 0.2em;
       text-transform: uppercase;
-      color: var(--muted);
-      padding-top: 12px;
-      border-top: 1px solid var(--border);
+      color: rgba(255,255,255,0.2);
     }
 
+    /* ── FOOTER ── */
     footer {
-      padding: 24px 48px;
-      border-top: 1px solid var(--border);
-      font-size: 0.75rem;
-      color: var(--muted);
+      width: 100%;
+      border-top: 1px solid rgba(255,255,255,0.08);
+      padding: 20px 32px;
+      display: flex;
+      justify-content: center;
+      font-size: 0.65rem;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: rgba(255,255,255,0.2);
     }
 
-    @media (max-width: 600px) {
-      header, main, footer { padding-left: 20px; padding-right: 20px; }
-      main { padding-top: 40px; }
-      .heading { font-size: 1.5rem; }
+    @media (max-width: 480px) {
+      .section { padding: 48px 20px 32px; }
+      .stripe { height: 12px; }
     }
   </style>
 </head>
 <body>
 
-  <header>
-    <a class="logo" href="/">jaar<span>.</span></a>
-  </header>
+  <div class="hero">
+    <div class="logo-wrap">
+      <div class="logo-text">JAAR</div>
+    </div>
+    <div class="stripe">
+      <span style="background:var(--red)"></span>
+      <span style="background:var(--orange)"></span>
+      <span style="background:var(--yellow)"></span>
+      <span style="background:var(--green)"></span>
+      <span style="background:var(--blue)"></span>
+    </div>
+    <p class="tagline">The Future Needs You</p>
+  </div>
 
-  <main>
-    <h1 class="heading">Ferramentas</h1>
-    <p class="subheading">Coleção de utilitários e geradores visuais.</p>
+  <section class="section">
+    <div class="section-label">Ferramentas</div>
 
     <div class="grid">
 
       <a class="card" href="tools/bokeh-generator.html">
-        <div class="card-icon" style="background: rgba(124,92,252,0.15);">🎨</div>
-        <div class="card-title">Gerador de Bokeh Abstrato</div>
-        <div class="card-desc">Gera imagens abstratas com manchas de luz coloridas e desfoque suave. Várias paletas de cores e download em PNG.</div>
+        <div class="card-num">001</div>
+        <div class="card-title">Bokeh<br>Abstrato</div>
+        <div class="card-desc">Gerador de imagens abstratas com manchas de luz coloridas, desfoque suave e múltiplas paletas.</div>
         <div class="card-tag">Visual · Gerador</div>
       </a>
 
     </div>
-  </main>
+  </section>
 
-  <footer>jaar — feito com Claude Code</footer>
+  <footer>jaar &nbsp;·&nbsp; feito com claude code</footer>
 
 </body>
 </html>
