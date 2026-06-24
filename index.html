@@ -5,7 +5,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>JAAR — The Future Needs You</title>
   <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link href="https://fonts.googleapis.com/css2?family=Black+Ops+One&family=Share+Tech+Mono&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Fredoka:wght@700&family=Press+Start+2P&family=Share+Tech+Mono&display=swap" rel="stylesheet">
   <style>
     *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
 
@@ -22,7 +22,7 @@
     body {
       background: var(--black);
       color: var(--white);
-      font-family: 'Share Tech Mono', monospace;
+      font-family: 'Press Start 2P', monospace;
       min-height: 100vh;
       display: flex;
       flex-direction: column;
@@ -39,36 +39,27 @@
     }
 
     .logo-wrap {
-      position: relative;
-      display: inline-block;
+      width: min(860px, 92vw);
     }
 
-    .logo-text {
-      font-family: 'Black Ops One', sans-serif;
-      font-size: clamp(80px, 18vw, 200px);
-      color: var(--white);
-      letter-spacing: 0.04em;
-      line-height: 1;
-      /* inline stroke effect */
-      -webkit-text-stroke: 3px var(--black);
-      paint-order: stroke fill;
-      text-shadow:
-        /* outer white halo for the inline look */
-        0 0 0 var(--white),
-        4px 4px 0 rgba(0,0,0,0.4);
-      position: relative;
+    .logo-svg {
+      width: 100%;
+      height: auto;
+      display: block;
+      overflow: visible;
     }
 
     /* Rainbow stripe */
     .stripe {
       width: 100%;
       display: flex;
-      height: 18px;
+      flex-direction: column;
       margin-top: 10px;
     }
 
     .stripe span {
-      flex: 1;
+      width: 100%;
+      height: 6px;
     }
 
     .tagline {
@@ -147,7 +138,7 @@
     }
 
     .card-title {
-      font-family: 'Black Ops One', sans-serif;
+      font-family: 'Press Start 2P', monospace;
       font-size: 1.05rem;
       letter-spacing: 0.05em;
       line-height: 1.2;
@@ -155,6 +146,7 @@
     }
 
     .card-desc {
+      font-family: system-ui, -apple-system, sans-serif;
       font-size: 0.75rem;
       color: rgba(255,255,255,0.45);
       line-height: 1.6;
@@ -192,7 +184,7 @@
 
   <div class="hero">
     <div class="logo-wrap">
-      <div class="logo-text">JAAR</div>
+      <img class="logo-svg" src="jaar_logo_tight.svg" alt="JAAR" />
     </div>
     <div class="stripe">
       <span style="background:var(--red)"></span>
