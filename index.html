@@ -26,61 +26,54 @@
       min-height: 100vh;
       display: flex;
       flex-direction: column;
-      align-items: center;
     }
 
-    /* ── HERO ── */
-    .hero {
+    /* ── HEADER ── */
+    header {
       width: 100%;
       display: flex;
-      flex-direction: column;
       align-items: center;
-      padding: 72px 24px 0;
+      justify-content: space-between;
+      padding: 18px 32px;
     }
 
-    .logo-wrap {
-      width: min(860px, 92vw);
-    }
-
-    .logo-svg {
-      width: 100%;
-      height: auto;
+    .logo-wrap img {
+      height: 32px;
       display: block;
-      overflow: visible;
-    }
-
-    /* Rainbow stripe */
-    .stripe {
-      width: 100%;
-      display: flex;
-      flex-direction: column;
-      margin-top: 10px;
-    }
-
-    .stripe span {
-      width: 100%;
-      height: 6px;
     }
 
     .tagline {
-      margin-top: 18px;
       font-family: 'Share Tech Mono', monospace;
-      font-size: clamp(0.65rem, 2vw, 0.85rem);
-      letter-spacing: 0.35em;
+      font-size: 0.7rem;
+      letter-spacing: 0.3em;
       text-transform: uppercase;
       color: var(--white);
       opacity: 0.75;
     }
 
+    /* ── RAINBOW STRIPE ── */
+    .stripe {
+      width: 100%;
+      display: flex;
+      flex-direction: column;
+    }
+
+    .stripe span {
+      width: 100%;
+      height: 5px;
+    }
+
     /* ── SECTION ── */
     .section {
+      flex: 1;
       width: 100%;
       max-width: 1000px;
-      padding: 72px 32px 48px;
+      padding: 56px 32px 48px;
+      margin: 0 auto;
     }
 
     .section-label {
-      font-size: 0.65rem;
+      font-size: 0.6rem;
       letter-spacing: 0.4em;
       text-transform: uppercase;
       color: var(--yellow);
@@ -132,22 +125,22 @@
     .card:hover::before { opacity: 1; }
 
     .card-num {
-      font-size: 0.6rem;
+      font-size: 0.55rem;
       letter-spacing: 0.25em;
       color: rgba(255,255,255,0.25);
     }
 
     .card-title {
       font-family: 'Press Start 2P', monospace;
-      font-size: 1.05rem;
-      letter-spacing: 0.05em;
-      line-height: 1.2;
+      font-size: 1rem;
+      letter-spacing: 0.03em;
+      line-height: 1.4;
       color: var(--white);
     }
 
     .card-desc {
       font-family: system-ui, -apple-system, sans-serif;
-      font-size: 0.75rem;
+      font-size: 0.78rem;
       color: rgba(255,255,255,0.45);
       line-height: 1.6;
     }
@@ -155,7 +148,7 @@
     .card-tag {
       margin-top: auto;
       padding-top: 14px;
-      font-size: 0.6rem;
+      font-size: 0.55rem;
       letter-spacing: 0.2em;
       text-transform: uppercase;
       color: rgba(255,255,255,0.2);
@@ -168,32 +161,34 @@
       padding: 20px 32px;
       display: flex;
       justify-content: center;
-      font-size: 0.65rem;
+      font-size: 0.55rem;
       letter-spacing: 0.2em;
       text-transform: uppercase;
       color: rgba(255,255,255,0.2);
     }
 
     @media (max-width: 480px) {
-      .section { padding: 48px 20px 32px; }
-      .stripe { height: 12px; }
+      header { padding: 14px 20px; }
+      .tagline { display: none; }
+      .section { padding: 40px 20px 32px; }
     }
   </style>
 </head>
 <body>
 
-  <div class="hero">
+  <header>
     <div class="logo-wrap">
-      <img class="logo-svg" src="jaar_logo_tight.svg" alt="JAAR" />
-    </div>
-    <div class="stripe">
-      <span style="background:var(--red)"></span>
-      <span style="background:var(--orange)"></span>
-      <span style="background:var(--yellow)"></span>
-      <span style="background:var(--green)"></span>
-      <span style="background:var(--blue)"></span>
+      <img src="jaar_logo_tight.svg" alt="JAAR" />
     </div>
     <p class="tagline">The Future Needs You</p>
+  </header>
+
+  <div class="stripe">
+    <span style="background:var(--red)"></span>
+    <span style="background:var(--orange)"></span>
+    <span style="background:var(--yellow)"></span>
+    <span style="background:var(--green)"></span>
+    <span style="background:var(--blue)"></span>
   </div>
 
   <section class="section">
@@ -211,7 +206,8 @@
     </div>
   </section>
 
-  <footer>jaar &nbsp;·&nbsp; feito com claude code</footer>
+  <footer>jaar &nbsp;·&nbsp; <span id="year"></span></footer>
+  <script>document.getElementById('year').textContent = new Date().getFullYear();</script>
 
 </body>
 </html>
