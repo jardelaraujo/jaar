@@ -211,7 +211,6 @@
       }
 
       applyBlur();
-      addVignette();
     }
 
     function applyBlur() {
@@ -232,20 +231,6 @@
       // Crop back to original size, discarding artifact edges
       ctx.clearRect(0, 0, W, H);
       ctx.drawImage(tmp, pad, pad, W, H, 0, 0, W, H);
-    }
-
-    function addVignette() {
-      const W = canvas.width;
-      const H = canvas.height;
-      const cx = W / 2, cy = H / 2;
-      const r = Math.max(W, H) * 0.75;
-
-      const grad = ctx.createRadialGradient(cx, cy, r * 0.3, cx, cy, r);
-      grad.addColorStop(0, 'rgba(0,0,0,0)');
-      grad.addColorStop(1, 'rgba(0,0,0,0.75)');
-
-      ctx.fillStyle = grad;
-      ctx.fillRect(0, 0, W, H);
     }
 
     function download() {
