@@ -1,9 +1,9 @@
 <!DOCTYPE html>
-<html lang="pt-BR">
+<html lang="en">
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Gerador de Imagens Abstratas</title>
+  <title>Abstract Image Generator</title>
   <style>
     * { margin: 0; padding: 0; box-sizing: border-box; }
 
@@ -103,25 +103,25 @@
   </style>
 </head>
 <body>
-  <h1>Gerador de Bokeh Abstrato</h1>
+  <h1>Abstract Bokeh Generator</h1>
 
   <canvas id="canvas" width="1200" height="675"></canvas>
 
   <div class="controls">
     <select id="palette">
-      <option value="neon">Neon (padrão)</option>
+      <option value="neon">Neon (default)</option>
       <option value="sunset">Sunset</option>
       <option value="ocean">Ocean</option>
       <option value="forest">Forest</option>
       <option value="fire">Fire</option>
-      <option value="random">Aleatória</option>
+      <option value="random">Random</option>
     </select>
-    <button class="primary" onclick="generate()">Gerar nova ✦</button>
-    <button class="random-btn" onclick="generateRandom()">Aleatoriamente 🎲</button>
-    <button onclick="download()">Baixar PNG</button>
+    <button class="primary" onclick="generate()">Generate new ✦</button>
+    <button class="random-btn" onclick="generateRandom()">Randomize 🎲</button>
+    <button onclick="download()">Download PNG</button>
   </div>
 
-  <p class="hint">Clique na imagem ou em "Gerar nova" para criar uma diferente</p>
+  <p class="hint">Click the image or "Generate new" to create a different one</p>
 
   <script>
     const canvas = document.getElementById('canvas');
@@ -129,12 +129,12 @@
 
     const palettes = {
       neon: [
-        [0, 230, 255],    // ciano
+        [0, 230, 255],    // cyan
         [220, 50, 255],   // magenta
-        [80, 80, 255],    // azul
-        [255, 50, 180],   // rosa
-        [0, 150, 255],    // azul claro
-        [180, 0, 255],    // violeta
+        [80, 80, 255],    // blue
+        [255, 50, 180],   // pink
+        [0, 150, 255],    // light blue
+        [180, 0, 255],    // violet
       ],
       sunset: [
         [255, 80, 20],
@@ -220,7 +220,7 @@
       const blurAmount = Math.floor(rand(40, 80));
       const pad = blurAmount * 2;
 
-      // Canvas maior que o original para o blur não degradar as bordas
+      // Larger canvas to prevent blur from degrading edges
       const tmp = document.createElement('canvas');
       tmp.width = W + pad * 2;
       tmp.height = H + pad * 2;
@@ -229,7 +229,7 @@
       tctx.filter = `blur(${blurAmount}px)`;
       tctx.drawImage(canvas, pad, pad);
 
-      // Recorta de volta ao tamanho original, descartando as bordas com artefato
+      // Crop back to original size, discarding artifact edges
       ctx.clearRect(0, 0, W, H);
       ctx.drawImage(tmp, pad, pad, W, H, 0, 0, W, H);
     }
@@ -250,7 +250,7 @@
 
     function download() {
       const link = document.createElement('a');
-      link.download = `bokeh-abstrato-${Date.now()}.png`;
+      link.download = `bokeh-abstract-${Date.now()}.png`;
       link.href = canvas.toDataURL('image/png');
       link.click();
     }
@@ -264,7 +264,7 @@
 
     canvas.addEventListener('click', generate);
 
-    // Gera ao carregar
+    // Generate on load
     generate();
   </script>
 </body>
