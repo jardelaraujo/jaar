@@ -67,6 +67,20 @@
         return data.user;
       },
       async logout() { await sb.auth.signOut(); },
+      async changePassword(atual, nova) {
+        const email = (await sb.auth.getUser()).data.user?.email;
+        if (!email) throw new Error("Sessão expirada. Entre novamente.");
+        // confirma a palavra-passe atual antes de a trocar
+        const check = await sb.auth.signInWithPassword({ email, password: atual });
+        if (check.error) throw new Error("A palavra-passe atual está incorreta.");
+        const { error } = await sb.auth.updateUser({ password: nova });
+        if (error) {
+          if (error.code === "same_password") throw new Error("A nova palavra-passe tem de ser diferente da atual.");
+          if (error.code === "weak_password") throw new Error("A nova palavra-passe é demasiado fraca. Use mais caracteres, misturando letras e números.");
+          if (error.code === "reauthentication_needed") throw new Error("Por segurança, saia e volte a entrar antes de alterar a palavra-passe.");
+          throw new Error(error.message);
+        }
+      },
       async list() { return ok(await sb.from("gastos").select(cols).order("data", { ascending: false }).order("created_at", { ascending: false })); },
       async create(g) { return ok(await sb.from("gastos").insert(g).select(cols).single()); },
       async update(id, g) { return ok(await sb.from("gastos").update(g).eq("id", id).select(cols).single()); },
@@ -98,6 +112,7 @@
         return user;
       },
       async logout() { user = null; try { localStorage.removeItem(USER); } catch (_) { /* ignora */ } },
+      async changePassword() { /* modo demo: não há palavras-passe reais */ },
       async list() { return sorted(); },
       async create(g) { const n = { ...g, id: uid(), created_at: new Date().toISOString() }; mem.push(n); write(); return n; },
       async update(id, g) { const i = mem.findIndex((x) => x.id === id); mem[i] = { ...mem[i], ...g }; write(); return mem[i]; },
@@ -146,6 +161,50 @@
   });
 
   $("#logout").addEventListener("click", async () => { await api.logout(); showLogin(); });
+
+  // ───────────────────────── alterar palavra-passe ─────────────────────────
+  const dlgSenha = $("#dlg-senha"), formSenha = $("#senha-form");
+
+  function abrirSenha() {
+    formSenha.reset();
+    $("#senha-error").hidden = true;
+    $("#senha-email").textContent = state.user?.email || "";
+    formSenha.username.value = state.user?.email || "";
+    mostrarSenhas(false);
+    dlgSenha.showModal();
+    setTimeout(() => formSenha.atual.focus(), 50);
+  }
+
+  function mostrarSenhas(on) {
+    $("#senha-mostrar").checked = on;
+    ["atual", "nova", "confirmar"].forEach((n) => (formSenha[n].type = on ? "text" : "password"));
+  }
+
+  $("#btn-senha").addEventListener("click", abrirSenha);
+  $("#senha-cancelar").addEventListener("click", () => dlgSenha.close());
+  $("#senha-mostrar").addEventListener("change", (e) => mostrarSenhas(e.target.checked));
+  dlgSenha.addEventListener("click", (e) => { if (e.target === dlgSenha) dlgSenha.close(); });
+
+  formSenha.addEventListener("submit", async (e) => {
+    e.preventDefault();
+    const err = $("#senha-error"), btn = formSenha.querySelector("button[type=submit]");
+    const atual = formSenha.atual.value, nova = formSenha.nova.value, conf = formSenha.confirmar.value;
+    const falha = (msg) => { err.textContent = msg; err.hidden = false; };
+    err.hidden = true;
+    if (nova.length < 8) return falha("A nova palavra-passe tem de ter pelo menos 8 caracteres.");
+    if (nova !== conf) return falha("A confirmação não coincide com a nova palavra-passe.");
+    if (nova === atual) return falha("A nova palavra-passe tem de ser diferente da atual.");
+    btn.disabled = true;
+    try {
+      await api.changePassword(atual, nova);
+      dlgSenha.close();
+      toast(api.demo ? "Modo demo: nada foi alterado" : "Palavra-passe alterada");
+    } catch (ex) {
+      falha(ex.message || "Não foi possível alterar a palavra-passe.");
+    } finally {
+      btn.disabled = false;
+    }
+  });
 
   // ───────────────────────── dados ─────────────────────────
   async function refresh() {

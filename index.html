@@ -51,6 +51,7 @@
       </nav>
       <div class="user">
         <span id="user-email" class="muted user-email"></span>
+        <button id="btn-senha" class="btn btn-ghost btn-sm" type="button" aria-label="Alterar palavra-passe" title="Alterar palavra-passe"><span aria-hidden="true">🔑</span><span class="btn-lbl"> Alterar palavra-passe</span></button>
         <button id="logout" class="btn btn-ghost btn-sm" type="button">Sair</button>
       </div>
     </header>
@@ -187,6 +188,38 @@
         <span class="spacer"></span>
         <button type="button" id="btn-cancelar" class="btn btn-ghost">Cancelar</button>
         <button type="submit" class="btn btn-primary">Guardar</button>
+      </div>
+    </form>
+  </dialog>
+
+  <!-- ── ALTERAR PALAVRA-PASSE ── -->
+  <dialog id="dlg-senha" aria-labelledby="senha-title">
+    <form id="senha-form" class="form" autocomplete="on">
+      <h2 id="senha-title">Alterar palavra-passe</h2>
+      <p class="muted form-intro">Conta: <strong id="senha-email"></strong></p>
+      <input type="email" name="username" autocomplete="username" hidden />
+
+      <label>Palavra-passe atual
+        <input type="password" name="atual" required autocomplete="current-password" />
+      </label>
+      <label>Nova palavra-passe
+        <input type="password" name="nova" required minlength="8" autocomplete="new-password" aria-describedby="senha-regra" />
+      </label>
+      <p id="senha-regra" class="muted form-hint">Mínimo de 8 caracteres, diferente da atual.</p>
+      <label>Confirmar nova palavra-passe
+        <input type="password" name="confirmar" required minlength="8" autocomplete="new-password" />
+      </label>
+
+      <label class="check">
+        <input type="checkbox" id="senha-mostrar" /> Mostrar palavras-passe
+      </label>
+
+      <p id="senha-error" class="error" role="alert" hidden></p>
+
+      <div class="form-actions">
+        <span class="spacer"></span>
+        <button type="button" id="senha-cancelar" class="btn btn-ghost">Cancelar</button>
+        <button type="submit" class="btn btn-primary">Guardar nova palavra-passe</button>
       </div>
     </form>
   </dialog>

@@ -1,6 +1,6 @@
 // Service worker: guarda a "casca" da app para abrir rápido e funcionar como app instalada.
 // Os dados (Supabase) vão sempre à rede.
-const CACHE = "casa-avintes-v1";
+const CACHE = "casa-avintes-v2";
 const SHELL = ["./", "index.html", "styles.css", "app.js", "config.js", "icon.svg", "manifest.webmanifest"];
 
 self.addEventListener("install", (e) => {

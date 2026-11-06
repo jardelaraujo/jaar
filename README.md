@@ -7,6 +7,7 @@ App web e mobile (PWA, instalável no telemóvel) para registar e ver os gastos 
 - **Resumo**: total gasto, pago, por pagar, gasto deste mês
 - **Gráficos**: evolução por mês ou acumulada, total por categoria, total por quem pagou
 - Filtros, pesquisa e exportação para CSV
+- **Alterar palavra-passe**: botão 🔑 no topo; pede a palavra-passe atual, a nova (mínimo 8 caracteres) e a confirmação
 - Modo claro/escuro automático; abre como app no telemóvel ("Adicionar ao ecrã principal")
 
 É uma app estática (HTML/CSS/JS, sem build), servida a partir da raiz do repositório.
@@ -51,6 +52,8 @@ Abra o endereço da app no telemóvel:
 - **Android (Chrome)**: menu ⋮ → Instalar app
 
 ## Notas
+
+- A alteração de palavra-passe confirma primeiro a palavra-passe atual. O Supabase pode recusá-la ("saia e volte a entrar") quando a sessão é antiga e a opção **Authentication → Providers → Email → Secure password change** está ativa; nesse caso basta voltar a fazer login.
 
 - **Total** = preço unitário × quantidade.
 - No `schema.sql`, a "Comissão Avaliação" ficou com o pagador **"Pessoa 2"**, porque no Notion foi paga por um utilizador cujo nome não consegui ler. Altere o nome na app (toque no lançamento) ou no SQL antes de o executar.
