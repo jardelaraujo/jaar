@@ -9,7 +9,7 @@ App web e mobile (PWA, instalável no telemóvel) para registar e ver os gastos 
 - Filtros, pesquisa e exportação para CSV
 - Modo claro/escuro automático; abre como app no telemóvel ("Adicionar ao ecrã principal")
 
-É uma app estática (HTML/CSS/JS, sem build), servida a partir desta pasta.
+É uma app estática (HTML/CSS/JS, sem build), servida a partir da raiz do repositório.
 
 ## 1. Configurar o backend (Supabase, plano gratuito)
 
@@ -33,7 +33,7 @@ Sem `config.js` preenchido, a app corre em **modo demo**: aceita qualquer login 
 
 ## 2. Publicar
 
-Qualquer alojamento estático serve. Com GitHub Pages: **Settings → Pages → Deploy from a branch** (`main`, pasta `/`). A app fica em `https://<utilizador>.github.io/jaar/casa-avintes/`.
+Qualquer alojamento estático serve. Com GitHub Pages: **Settings → Pages → Deploy from a branch** (`main`, pasta `/`). A app fica em `https://<utilizador>.github.io/jaar/`.
 
 Para testar localmente:
 
@@ -41,7 +41,7 @@ Para testar localmente:
 python3 -m http.server 8000
 ```
 
-Depois abra <http://localhost:8000/casa-avintes/>.
+Depois abra <http://localhost:8000/>.
 
 ## 3. Instalar no telemóvel
 

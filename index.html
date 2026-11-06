@@ -1,220 +1,201 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="pt-PT">
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>JAAR — The Future Needs You</title>
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link href="https://fonts.googleapis.com/css2?family=Fredoka:wght@700&family=Press+Start+2P&family=Share+Tech+Mono&display=swap" rel="stylesheet">
-  <style>
-    *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
-
-    :root {
-      --black: #000000;
-      --white: #ffffff;
-      --red:    #e8251a;
-      --orange: #f07010;
-      --yellow: #f5c800;
-      --green:  #2a9a2a;
-      --blue:   #1a50c8;
-    }
-
-    body {
-      background: var(--black);
-      color: var(--white);
-      font-family: 'Press Start 2P', monospace;
-      min-height: 100vh;
-      display: flex;
-      flex-direction: column;
-    }
-
-    /* ── HEADER ── */
-    header {
-      width: 100%;
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      padding: 18px 32px;
-    }
-
-    .logo-wrap img {
-      height: 32px;
-      display: block;
-    }
-
-    .tagline {
-      font-family: 'Share Tech Mono', monospace;
-      font-size: 0.7rem;
-      letter-spacing: 0.3em;
-      text-transform: uppercase;
-      color: var(--white);
-      opacity: 0.75;
-    }
-
-    /* ── RAINBOW STRIPE ── */
-    .stripe {
-      width: 100%;
-      display: flex;
-      flex-direction: column;
-    }
-
-    .stripe span {
-      width: 100%;
-      height: 5px;
-    }
-
-    /* ── SECTION ── */
-    .section {
-      flex: 1;
-      width: 100%;
-      max-width: 1000px;
-      padding: 56px 32px 48px;
-      margin: 0 auto;
-    }
-
-    .section-label {
-      font-size: 0.6rem;
-      letter-spacing: 0.4em;
-      text-transform: uppercase;
-      color: var(--yellow);
-      margin-bottom: 28px;
-      display: flex;
-      align-items: center;
-      gap: 12px;
-    }
-
-    .section-label::after {
-      content: '';
-      flex: 1;
-      height: 1px;
-      background: rgba(255,255,255,0.12);
-    }
-
-    /* ── GRID ── */
-    .grid {
-      display: grid;
-      grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
-      gap: 2px;
-    }
-
-    .card {
-      background: #0d0d0d;
-      border: 1px solid rgba(255,255,255,0.08);
-      padding: 28px 24px;
-      text-decoration: none;
-      color: var(--white);
-      display: flex;
-      flex-direction: column;
-      gap: 10px;
-      transition: background 0.12s;
-      position: relative;
-      overflow: hidden;
-    }
-
-    .card::before {
-      content: '';
-      position: absolute;
-      top: 0; left: 0; right: 0;
-      height: 3px;
-      background: linear-gradient(90deg, var(--red), var(--yellow), var(--green), var(--blue));
-      opacity: 0;
-      transition: opacity 0.12s;
-    }
-
-    .card:hover { background: #141414; }
-    .card:hover::before { opacity: 1; }
-
-    .card-num {
-      font-size: 0.55rem;
-      letter-spacing: 0.25em;
-      color: rgba(255,255,255,0.25);
-    }
-
-    .card-title {
-      font-family: 'Press Start 2P', monospace;
-      font-size: 1rem;
-      letter-spacing: 0.03em;
-      line-height: 1.4;
-      color: var(--white);
-    }
-
-    .card-desc {
-      font-family: system-ui, -apple-system, sans-serif;
-      font-size: 0.78rem;
-      color: rgba(255,255,255,0.45);
-      line-height: 1.6;
-    }
-
-    .card-tag {
-      margin-top: auto;
-      padding-top: 14px;
-      font-size: 0.55rem;
-      letter-spacing: 0.2em;
-      text-transform: uppercase;
-      color: rgba(255,255,255,0.2);
-    }
-
-    /* ── FOOTER ── */
-    footer {
-      width: 100%;
-      border-top: 1px solid rgba(255,255,255,0.08);
-      padding: 20px 32px;
-      display: flex;
-      justify-content: center;
-      font-size: 0.55rem;
-      letter-spacing: 0.2em;
-      text-transform: uppercase;
-      color: rgba(255,255,255,0.2);
-    }
-
-    @media (max-width: 480px) {
-      header { padding: 14px 20px; }
-      .tagline { display: none; }
-      .section { padding: 40px 20px 32px; }
-    }
-  </style>
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+  <title>Casa Avintes</title>
+  <meta name="description" content="Registo e visualização dos gastos da casa de Avintes." />
+  <meta name="theme-color" content="#2a78d6" />
+  <meta name="apple-mobile-web-app-capable" content="yes" />
+  <meta name="apple-mobile-web-app-title" content="Casa Avintes" />
+  <link rel="manifest" href="manifest.webmanifest" />
+  <link rel="icon" href="icon.svg" type="image/svg+xml" />
+  <link rel="apple-touch-icon" href="icon.svg" />
+  <link rel="stylesheet" href="styles.css" />
 </head>
 <body>
 
-  <header>
-    <div class="logo-wrap">
-      <img src="jaar_logo_tight.svg" alt="JAAR" />
-    </div>
-    <p class="tagline">The Future Needs You</p>
-  </header>
+  <!-- ── LOGIN ── -->
+  <main id="view-login" class="login" hidden>
+    <form id="login-form" class="login-card" autocomplete="on">
+      <img src="icon.svg" alt="" class="login-logo" width="56" height="56" />
+      <h1>Casa Avintes</h1>
+      <p class="muted">Gastos da casa — entre para continuar.</p>
 
-  <div class="stripe">
-    <span style="background:var(--red)"></span>
-    <span style="background:var(--orange)"></span>
-    <span style="background:var(--yellow)"></span>
-    <span style="background:var(--green)"></span>
-    <span style="background:var(--blue)"></span>
+      <label>Email
+        <input type="email" name="email" required autocomplete="username" inputmode="email" />
+      </label>
+      <label>Palavra-passe
+        <input type="password" name="password" required autocomplete="current-password" minlength="6" />
+      </label>
+
+      <p id="login-error" class="error" role="alert" hidden></p>
+      <button type="submit" class="btn btn-primary btn-block">Entrar</button>
+      <p id="demo-note" class="demo-note" hidden>
+        <strong>Modo demo:</strong> o Supabase ainda não está configurado (config.js).
+        Qualquer email/palavra-passe entra e os dados ficam só neste browser.
+      </p>
+    </form>
+  </main>
+
+  <!-- ── APP ── -->
+  <div id="view-app" hidden>
+    <header class="topbar">
+      <div class="brand">
+        <img src="icon.svg" alt="" width="28" height="28" />
+        <span>Casa Avintes</span>
+      </div>
+      <nav class="tabs" role="tablist">
+        <button role="tab" class="tab" data-tab="resumo" aria-selected="true">Resumo</button>
+        <button role="tab" class="tab" data-tab="lancamentos" aria-selected="false">Lançamentos</button>
+      </nav>
+      <div class="user">
+        <span id="user-email" class="muted user-email"></span>
+        <button id="logout" class="btn btn-ghost btn-sm" type="button">Sair</button>
+      </div>
+    </header>
+
+    <div id="demo-banner" class="banner" hidden>
+      Modo demo — os dados ficam guardados apenas neste browser. Configure o Supabase em <code>config.js</code> para partilhar entre dispositivos.
+    </div>
+
+    <!-- RESUMO -->
+    <section id="tab-resumo" class="page" role="tabpanel">
+      <div class="kpis">
+        <div class="kpi kpi-hero">
+          <span class="kpi-label">Total gasto</span>
+          <span class="kpi-value" id="kpi-total">—</span>
+          <span class="kpi-sub" id="kpi-count"></span>
+        </div>
+        <div class="kpi">
+          <span class="kpi-label">Pago</span>
+          <span class="kpi-value" id="kpi-pago">—</span>
+        </div>
+        <div class="kpi">
+          <span class="kpi-label">Por pagar</span>
+          <span class="kpi-value" id="kpi-pendente">—</span>
+        </div>
+        <div class="kpi">
+          <span class="kpi-label">Este mês</span>
+          <span class="kpi-value" id="kpi-mes">—</span>
+        </div>
+      </div>
+
+      <div class="charts">
+        <article class="card chart-card chart-wide">
+          <header class="card-head">
+            <h2>Evolução no tempo</h2>
+            <div class="seg" role="group" aria-label="Modo do gráfico">
+              <button type="button" class="seg-btn" data-time="mensal" aria-pressed="true">Por mês</button>
+              <button type="button" class="seg-btn" data-time="acumulado" aria-pressed="false">Acumulado</button>
+            </div>
+          </header>
+          <div class="chart-box"><canvas id="chart-tempo" aria-label="Gastos ao longo do tempo" role="img"></canvas></div>
+        </article>
+
+        <article class="card chart-card">
+          <header class="card-head"><h2>Por categoria</h2></header>
+          <div class="chart-box"><canvas id="chart-categoria" aria-label="Gastos por categoria" role="img"></canvas></div>
+        </article>
+
+        <article class="card chart-card">
+          <header class="card-head"><h2>Quem pagou</h2></header>
+          <div class="chart-box chart-box-sm"><canvas id="chart-pessoa" aria-label="Gastos por pessoa" role="img"></canvas></div>
+        </article>
+      </div>
+    </section>
+
+    <!-- LANÇAMENTOS -->
+    <section id="tab-lancamentos" class="page" role="tabpanel" hidden>
+      <div class="filters">
+        <input id="f-busca" type="search" placeholder="Procurar nome ou loja…" aria-label="Procurar" />
+        <select id="f-categoria" aria-label="Categoria"><option value="">Todas as categorias</option></select>
+        <select id="f-pago" aria-label="Estado de pagamento">
+          <option value="">Pagos e por pagar</option>
+          <option value="1">Só pagos</option>
+          <option value="0">Só por pagar</option>
+        </select>
+        <button id="export-csv" type="button" class="btn btn-ghost btn-sm">Exportar CSV</button>
+      </div>
+      <p class="list-summary muted" id="list-summary"></p>
+
+      <div class="table-wrap card">
+        <table class="table">
+          <thead>
+            <tr>
+              <th>Data</th><th>Nome</th><th>Categoria</th><th>Loja</th>
+              <th>Quem pagou</th><th class="num">Qtd.</th><th class="num">Total</th><th>Estado</th>
+            </tr>
+          </thead>
+          <tbody id="lista"></tbody>
+        </table>
+        <p id="lista-vazia" class="empty" hidden>Ainda não há lançamentos. Toque em <strong>+</strong> para adicionar.</p>
+      </div>
+    </section>
+
+    <button id="fab" class="fab" type="button" aria-label="Novo lançamento">+</button>
   </div>
 
-  <section class="section">
-    <div class="section-label">Tools</div>
+  <!-- ── FORMULÁRIO (novo / editar) ── -->
+  <dialog id="dlg">
+    <form id="gasto-form" method="dialog" class="form">
+      <h2 id="dlg-title">Novo lançamento</h2>
+      <input type="hidden" name="id" />
 
-    <div class="grid">
+      <label>Nome
+        <input name="nome" required maxlength="200" placeholder="Ex.: Tinta branca 15L" />
+      </label>
 
-      <a class="card" href="tools/bokeh-generator.html">
-        <div class="card-num">001</div>
-        <div class="card-title">Abstract<br>Bokeh</div>
-        <div class="card-desc">Abstract image generator with colorful light blobs, soft blur, and multiple color palettes.</div>
-        <div class="card-tag">Visual · Generator</div>
-      </a>
+      <div class="row">
+        <label>Categoria
+          <select name="categoria" required></select>
+        </label>
+        <label>Data
+          <input name="data" type="date" required />
+        </label>
+      </div>
 
-      <a class="card" href="casa-avintes/">
-        <div class="card-num">002</div>
-        <div class="card-title">Casa<br>Avintes</div>
-        <div class="card-desc">Expense tracker for the Avintes house: log costs, see totals by month, category and payer.</div>
-        <div class="card-tag">Finance · App</div>
-      </a>
+      <div class="row">
+        <label>Preço unitário (€)
+          <input name="preco" type="number" inputmode="decimal" step="0.01" min="0" required />
+        </label>
+        <label>Quantidade
+          <input name="quantidade" type="number" inputmode="decimal" step="any" min="0.01" value="1" required />
+        </label>
+      </div>
+      <p class="muted form-total">Total: <strong id="form-total">0,00 €</strong></p>
 
-    </div>
-  </section>
+      <div class="row">
+        <label>Loja
+          <input name="loja" maxlength="120" list="lojas" placeholder="Opcional" />
+          <datalist id="lojas"></datalist>
+        </label>
+        <label>Quem pagou
+          <input name="quem_pagou" maxlength="80" list="pessoas" placeholder="Ex.: Jardel" />
+          <datalist id="pessoas"></datalist>
+        </label>
+      </div>
 
-  <footer>jaar &nbsp;·&nbsp; <span id="year"></span></footer>
-  <script>document.getElementById('year').textContent = new Date().getFullYear();</script>
+      <label class="check">
+        <input name="pago" type="checkbox" checked /> Já foi pago
+      </label>
 
+      <p id="form-error" class="error" role="alert" hidden></p>
+
+      <div class="form-actions">
+        <button type="button" id="btn-apagar" class="btn btn-danger" hidden>Apagar</button>
+        <span class="spacer"></span>
+        <button type="button" id="btn-cancelar" class="btn btn-ghost">Cancelar</button>
+        <button type="submit" class="btn btn-primary">Guardar</button>
+      </div>
+    </form>
+  </dialog>
+
+  <div id="toast" class="toast" role="status" hidden></div>
+
+  <script src="config.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2.45.4/dist/umd/supabase.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.1/dist/chart.umd.js"></script>
+  <script src="app.js"></script>
 </body>
 </html>
