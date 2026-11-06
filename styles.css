@@ -231,6 +231,8 @@ dialog::backdrop { background: rgba(0,0,0,0.45); }
 .form h2 { font-size: 1.2rem; }
 .row { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
 .form-total { margin: -4px 0 0; font-size: 0.9rem; }
+.form-intro { margin: -6px 0 0; font-size: 0.9rem; }
+.form-hint  { margin: -8px 0 0; font-size: 0.8rem; }
 .form-actions { display: flex; gap: 10px; align-items: center; margin-top: 6px; flex-wrap: wrap; }
 .spacer { flex: 1; }
 
@@ -261,6 +263,10 @@ dialog::backdrop { background: rgba(0,0,0,0.45); }
   .chart-box { height: 240px; }
   .row { grid-template-columns: 1fr; }
   .form { padding: 20px 16px; }
+  .btn-lbl { display: none; }
+  .form-actions .spacer { display: none; }
+  .form-actions .btn { flex: 1 1 100%; }
+  .form-actions .btn-primary { order: -1; }
 
   /* Tabela vira lista de cartões */
   .table thead { display: none; }
