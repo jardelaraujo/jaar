@@ -3,6 +3,6 @@
 // A "anon key" é pública por design: a segurança vem das políticas RLS em schema.sql.
 // Enquanto estiver vazio, a app corre em MODO DEMO (dados guardados só neste browser).
 window.CASA_CONFIG = {
-  SUPABASE_URL: "",
-  SUPABASE_ANON_KEY: "",
+  SUPABASE_URL: "https://tvqjtkpxoeevieyjihzm.supabase.co",
+  SUPABASE_ANON_KEY: "sb_publishable_VMjP1XC9GRVX8VaSdhaiOg_AFENpLgL",
 };
